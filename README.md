@@ -56,7 +56,45 @@ You are all set and can test now:
 ```
 Result image will be located in `./result` folder.
 
+### FFmpeg
+To process video files, you will need ffmpeg.
+1. Download the `ffmpeg` and `ffprobe` binaries form FFmpeg [download](https://www.ffmpeg.org/download.html) page
+2. Upzip and extract the files to a location close to project directory. (I put them into `ffmpeg_bin`)
 
+if the scripts cannot locate the ffmpeg binaries, it will throw the error below:
+```
+--------------------ERROR--------------------
+--------------Environment--------------
+DeepMosaics: 0.5.1
+Python: 3.12.4 (main, Jun  6 2024, 18:26:44) [Clang 15.0.0 (clang-1500.3.9.4)]
+Pytorch: 2.4.0
+OpenCV: 4.10.0
+Platform: macOS-14.5-arm64-arm-64bit
+--------------BUG--------------
+Error Type: <class 'json.decoder.JSONDecodeError'>
+Expecting value: line 1 column 1 (char 0)
+<FrameSummary file /Users/ferrywlto/Documents/GitHub/3rdParty/DeepMosaics/deepmosaic.py, line 77 in <module>>
+<FrameSummary file /Users/ferrywlto/Documents/GitHub/3rdParty/DeepMosaics/deepmosaic.py, line 51 in main>
+<FrameSummary file /Users/ferrywlto/Documents/GitHub/3rdParty/DeepMosaics/cores/clean.py, line 169 in cleanmosaic_video_fusion>
+<FrameSummary file /Users/ferrywlto/Documents/GitHub/3rdParty/DeepMosaics/cores/init.py, line 8 in video_init>
+<FrameSummary file /Users/ferrywlto/Documents/GitHub/3rdParty/DeepMosaics/util/ffmpeg.py, line 67 in get_video_infos>
+<FrameSummary file /opt/homebrew/Cellar/python@3.12/3.12.4/Frameworks/Python.framework/Versions/3.12/lib/python3.12/json/__init__.py, line 346 in loads>
+<FrameSummary file /opt/homebrew/Cellar/python@3.12/3.12.4/Frameworks/Python.framework/Versions/3.12/lib/python3.12/json/decoder.py, line 337 in decode>
+<FrameSummary file /opt/homebrew/Cellar/python@3.12/3.12.4/Frameworks/Python.framework/Versions/3.12/lib/python3.12/json/decoder.py, line 355 in raw_decode>
+```
+3. Update `util/ffmpeg.py`, introduce variables to the path of ffmpeg binaries.
+4. Replace all the hardcoded call to ffmpeg/ffprobe to those variables.
+```
+# Note that the path is relative to the project root directory, not the util folder
+# Define the path to the ffmpeg binary
+FFMPEG_PATH = 'ffmpeg_bin/ffmpeg'
+FFPROBE_PATH = 'ffmpeg_bin/ffprobe'
+
+# change L58
+os.system('ffmpeg -y -r '+str(fps)+' -i '+imagepath+' -vcodec libx264 '+os.path.split(voicepath)[0]+'/video_tmp.mp4')
+# to
+os.system(f'{FFMPEG_PATH} -y -r '+str(fps)+' -i '+imagepath+' -vcodec libx264 '+os.path.split(voicepath)[0]+'/video_tmp.mp4')
+```
 
 
 ### Examples
