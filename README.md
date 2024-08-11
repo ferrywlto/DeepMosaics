@@ -8,6 +8,57 @@
 **English | [中文](./README_CN.md)**<br>
 You can use it to automatically remove the mosaics in images and videos, or add mosaics to them.<br>This project is based on "semantic segmentation" and "Image-to-Image Translation".<br>Try it at this [website](http://118.89.27.46:5000/)!<br>
 
+This fork is for my own reference on how did I successfully running the source code.
+Only this readme will get updated. I will list out the tricky part I had encountered.
+
+My development environment:
+- 16" Macbook Pro M3-Pro
+- MacOS Sonoma 14.5
+- Python 3.12
+
+## Pre-requisites
+
+### Model files
+As the repo author suggest, you should download the pretrained_models from the links provided in this readme. You should have a directory named `pretrained_models` in your project directory with the model files in it:
+```
+./pretrained_models
+├─ clean_face_HD.pth
+├─ clean_youknow_resnet_9blocks.pth
+├─ clean_youknow_video.pth
+├─ mosaic_position.pth
+├─ put_pretrained_model_here
+``` 
+### Python 3
+Since Python 3 it will throw errors when you `pip install -r requirements.txt` or `python3 -m pip install -r requirements.txt`
+```
+error: externally-managed-environment
+
+× This environment is externally managed
+```
+You will need to create a virtual environment first
+then call the `source` commend to set python use the created virtual environemnt
+```
+// run under project directory
+python3 -m venv any_name_you_like
+source the_name_you_used/bin/activate
+```
+For example if your virtual environment named "moasic"
+```
+python3 -m venv moasic
+source moasic/bin/activate
+```
+You will find that there is a `(moasic)` before your current working directory path afterwards.
+
+You are all set and can test now:
+```
+// run under project directory
+(moasic) DeepMosaics % python3 deepmosaic.py --media_path imgs/example/demosaic.jpg --model_path ./pretrained_models/clean_youknow_resnet_9blocks.pth --gpu_id 0
+```
+Result image will be located in `./result` folder.
+
+
+
+
 ### Examples
 
 ![image](./imgs/hand.gif)
