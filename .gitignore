@@ -224,3 +224,7 @@ nohup.out
 *.exe
 *.out
 *.app
+
+ffmpeg_bin
+local
+.DS_Store
