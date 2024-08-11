@@ -96,6 +96,28 @@ os.system('ffmpeg -y -r '+str(fps)+' -i '+imagepath+' -vcodec libx264 '+os.path.
 os.system(f'{FFMPEG_PATH} -y -r '+str(fps)+' -i '+imagepath+' -vcodec libx264 '+os.path.split(voicepath)[0]+'/video_tmp.mp4')
 ```
 
+### Other errors
+It is suggested to turn off the moasic mask preview with the `--no_preview` flag.
+
+One for saving computer resource to not opening a window and display those masks which I can't think of anything useful.
+Second is to avoid the error I encounted below.
+```
+Step:3/4 -- Clean Mosaic:
+--------------------ERROR--------------------
+--------------Environment--------------
+DeepMosaics: 0.5.1
+Python: 3.12.4 (main, Jun  6 2024, 18:26:44) [Clang 15.0.0 (clang-1500.3.9.4)]
+Pytorch: 2.4.0
+OpenCV: 4.10.0
+Platform: macOS-14.5-arm64-arm-64bit
+--------------BUG--------------
+Error Type: <class 'NotImplementedError'>
+
+<FrameSummary file /Users/ferrywlto/Documents/GitHub/3rdParty/DeepMosaics/deepmosaic.py, line 77 in <module>>
+<FrameSummary file /Users/ferrywlto/Documents/GitHub/3rdParty/DeepMosaics/deepmosaic.py, line 51 in main>
+<FrameSummary file /Users/ferrywlto/Documents/GitHub/3rdParty/DeepMosaics/cores/clean.py, line 211 in cleanmosaic_video_fusion>
+<FrameSummary file /opt/homebrew/Cellar/python@3.12/3.12.4/Frameworks/Python.framework/Versions/3.12/lib/python3.12/multiprocessing/queues.py, line 126 in qsize>
+```
 
 ### Examples
 
